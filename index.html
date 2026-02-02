@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Wife ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Lobster Two', cursive;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 50px 70px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  max-width: 620px;
+  width: 90%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 48px;
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+}
+
+p {
+  font-size: 26px;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.buttons {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  margin-top: 35px;
+}
+
+button {
+  padding: 12px 30px;
+  font-size: 22px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  position: absolute;
+  transition: left 0.3s ease, top 0.3s ease; /* smooth movement */
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+  left: 60px;
+  top: 50px;
+  z-index: 3;
+}
+
+#noBtn {
+  background: #ddd;
+  left: 400px;
+  top: 50px;
+  z-index: 3;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  100% { transform: translateY(-120vh) scale(1); opacity: 0; }
+}
+
+/* Foreground magical hearts */
+.heart-front {
+  position: absolute;
+  font-size: 24px;
+  animation-name: floatUpMagic;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes floatUpMagic {
+  0% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); opacity: 0.85; }
+  25% { transform: translateY(-25vh) translateX(-15px) rotate(15deg) scale(1.1); }
+  50% { transform: translateY(-50vh) translateX(10px) rotate(-10deg) scale(1.2); }
+  75% { transform: translateY(-75vh) translateX(-10px) rotate(20deg) scale(1.1); }
+  100% { transform: translateY(-120vh) translateX(0) rotate(0deg) scale(1); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <h1>Hey my love ❤️</h1>
+  <p id="textArea">
+    Will you go on a date with your husband? <br><br>
+    This Saturday, Mumbai’s seaside café brunch ☕🌊<br>
+    Just you and me, and love all around —<br>
+    because even after marriage, I still choose you. <br><br>
+    What say? 😌❤️
+  </p>
+
+  <div class="buttons" id="buttonsArea">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const texts = ["No 🙈","Really? 😅","No escape 😆","No chance 😝","You're persistent 😏","Haha, gotcha 😜"];
+let textIndex = 0;
+
+// 3 fixed positions for No button
+const positions = [
+  { left: 400, top: 50 },  // default
+  { left: 10, top: 10 },   // near "Hey"
+  { left: 180, top: 10 }   // after heart
+];
+let currentPos = 0;
+
+noBtn.addEventListener("mouseenter", ()=>{
+  currentPos = (currentPos + 1) % positions.length;
+  const pos = positions[currentPos];
+  noBtn.style.left = pos.left + "px";
+  noBtn.style.top = pos.top + "px";
+  textIndex = (textIndex + 1) % texts.length;
+  noBtn.innerText = texts[textIndex];
+});
+
+// Floating hearts background
+function createBackgroundHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.fontSize = 16 + Math.random() * 20 + "px";
+  heart.style.animationDuration = (4 + Math.random()*4) + "s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), 8000);
+}
+setInterval(createBackgroundHeart, 200);
+
+// Foreground magical hearts
+function createForegroundHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart-front";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.fontSize = 24 + Math.random() * 20 + "px";
+  heart.style.animationDuration = (6 + Math.random()*4) + "s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), 10000);
+}
+setInterval(createForegroundHeart, 500);
+
+// Yes button click -> fireworks + new card
+yesBtn.addEventListener("click", ()=>{
+  // Create fireworks overlay
+  const fireworks = document.createElement("div");
+  fireworks.style.position = "fixed";
+  fireworks.style.top = 0;
+  fireworks.style.left = 0;
+  fireworks.style.width = "100%";
+  fireworks.style.height = "100%";
+  fireworks.style.zIndex = 9999;
+  document.body.appendChild(fireworks);
+
+  const numFireworks = 15;
+  const particlesPerFirework = 20;
+
+  for (let i = 0; i < numFireworks; i++) {
+    setTimeout(() => {
+      const centerX = Math.random() * window.innerWidth;
+      const centerY = Math.random() * window.innerHeight / 2;
+      for (let j = 0; j < particlesPerFirework; j++) {
+        const heart = document.createElement("div");
+        heart.innerText = "💖";
+        heart.style.position = "absolute";
+        heart.style.left = centerX + "px";
+        heart.style.top = centerY + "px";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.opacity = 1;
+        fireworks.appendChild(heart);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 150 + 50;
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        heart.animate([
+          { transform: `translate(0,0) scale(1)`, opacity: 1 },
+          { transform: `translate(${x}px,${y}px) scale(0.5)`, opacity: 0 }
+        ], { duration: 1000 + Math.random()*500, easing: "ease-out" });
+
+        setTimeout(()=>heart.remove(), 1500);
+      }
+    }, i * 300);
+  }
+
+  // After fireworks, show new card
+  setTimeout(() => {
+    fireworks.remove();
+    const card = document.getElementById("card");
+    card.innerHTML = `
+      <h1>Yay! 😍❤️</h1>
+      <p>
+        Date confirmed! 🌊☕<br>
+        This Saturday is ours!<br>
+        I love you! 💖
+      </p>
+      <div class="buttons"></div>
+    `;
+  }, 3000);
+});
+</script>
+</body>
+</html>
